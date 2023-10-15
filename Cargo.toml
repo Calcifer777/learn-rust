@@ -2,5 +2,6 @@
 
 resolver = "2"
 members = [
-  "ch01-num-guess"
+  "ch01-num-guess",
+  "ch03-nth-fibo",
 ]
