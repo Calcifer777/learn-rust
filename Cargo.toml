@@ -1,3 +1,9 @@
+[package]
+name = "learn-rust"
+version = "0.1.0"
+edition = "2021"
+
+
 [workspace]
 
 resolver = "2"
@@ -6,4 +12,6 @@ members = [
   "ch03-nth-fibo",
   "ch04-ownership",
   "ch05-structs",
+  "ch06-enums",
+  "ch08-collections",
 ]

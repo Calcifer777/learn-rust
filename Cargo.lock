@@ -28,6 +28,14 @@ name = "ch05-structs"
 version = "0.1.0"
 
 [[package]]
+name = "ch06-enums"
+version = "0.1.0"
+
+[[package]]
+name = "ch08-collections"
+version = "0.1.0"
+
+[[package]]
 name = "getrandom"
 version = "0.2.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -37,6 +45,10 @@ dependencies = [
  "libc",
  "wasi",
 ]
+
+[[package]]
+name = "learn-rust"
+version = "0.1.0"
 
 [[package]]
 name = "libc"
