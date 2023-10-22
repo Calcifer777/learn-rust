@@ -4,4 +4,6 @@ resolver = "2"
 members = [
   "ch01-num-guess",
   "ch03-nth-fibo",
+  "ch04-ownership",
+  "ch05-structs",
 ]

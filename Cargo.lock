@@ -20,6 +20,14 @@ name = "ch03-nth-fibo"
 version = "0.1.0"
 
 [[package]]
+name = "ch04-ownership"
+version = "0.1.0"
+
+[[package]]
+name = "ch05-structs"
+version = "0.1.0"
+
+[[package]]
 name = "getrandom"
 version = "0.2.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
