@@ -1,8 +1,8 @@
-use super::super::*;
+use ch11_testing::*;
 
 #[test]
 fn test_adder() {
-    let out = adder(2);
+    let out = ch11_testing::adder(2);
     assert!(out==5, "adder(2) = {} != 5", out);
 }
 
