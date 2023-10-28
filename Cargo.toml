@@ -15,4 +15,6 @@ members = [
   "ch06-enums",
   "ch08-collections",
   "ch09-errors",
+  "ch10-generics",
+  "ch11-testing",
 ]
