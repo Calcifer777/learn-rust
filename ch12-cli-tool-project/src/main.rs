@@ -1,7 +1,6 @@
-mod args;
-
 use std::{env, process};
-use ch12_cli_tool_project::*;
+
+use minigrep::args::SimpleGrepConfig;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -13,7 +12,7 @@ fn main() {
     println!("File path: {:?}", cfg.filepath);
     println!("Query: {:?}", cfg.query);
 
-    if let Err(e) = run(cfg) {
+    if let Err(e) = minigrep::run(cfg) {
         println!("Application error: {e}");
         process::exit(1);
     }

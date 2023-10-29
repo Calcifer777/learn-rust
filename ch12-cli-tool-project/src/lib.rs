@@ -1,37 +1,21 @@
-mod args;
+pub mod args;
 
-use std::{env, error::Error, fs};
+use std::{error::Error, fs};
+
+use args::SimpleGrepConfig;
+
 
 pub fn run(config: SimpleGrepConfig) -> Result<(), Box<dyn Error>> {
     let text = fs::read_to_string(config.filepath)?;
-    let results = search_cased(&config.query, &text, config.cased);
+    let results = search(&config.query, &text, config.cased);
     for line in results {
         println!("{line}");
     }
     Ok(())
 }
 
-pub struct SimpleGrepConfig {
-    pub filepath: String,
-    pub query: String,
-    pub cased: bool,
-}
-
-impl SimpleGrepConfig {
-    pub fn build(args: &[String]) -> Result<SimpleGrepConfig, String> {
-        if args.len() != 3 {
-            Err(format!("Expected 2 arguments, found {}", args.len()))
-        } else {
-            Ok(SimpleGrepConfig {
-                filepath: args[1].clone(),
-                query: args[2].clone(),
-                cased: env::var("CASED").is_ok(),
-            })
-        }
-    }
-}
-
-fn search_cased<'a>(query: &str, contents: &'a str, cased: bool) -> Vec<&'a str> {
+fn search<'a>(query: &str, contents: &'a str, cased: bool) -> Vec<&'a str> {
+    // https://users.rust-lang.org/t/search-case-insensitive-from-ch-12-in-the-book-using-existing-search/35433/4
     let lquery = &query.to_lowercase();
     let pat = if cased {query} else {lquery};
     contents
@@ -51,24 +35,28 @@ mod tests {
     #[test]
     fn test_search_one_result() {
         let query = "duct";
-        let contents = concat!("Rust:\n", "safe, fast, productive.\n", "Pick three.\n",);
+        let contents = concat!(
+            "Rust:\n", 
+            "safe, fast, productive.\n", 
+            "Pick three.\n",
+        );
         let exp = vec!["safe, fast, productive."];
-        assert_eq!(search_cased(query, contents, false), exp);
+        assert_eq!(search(query, contents, false), exp);
     }
 
     #[test]
     fn test_search_case_sensitive() {
         let query = "duct";
         let contents = concat!(
-            "Rust:",
-            "safe, fast, productive.",
-            "Pick three.",
-            "Duct tape.",
+            "Rust:\n",
+            "safe, fast, productive.\n",
+            "Pick three.\n",
+            "Duct tape.\n",
         );
 
         assert_eq!(
             vec!["safe, fast, productive."],
-            search_cased(query, contents, true)
+            search(query, contents, true)
         );
     }
 
@@ -76,15 +64,15 @@ mod tests {
     fn case_insensitive() {
         let query = "rUsT";
         let contents = concat!(
-            "Rust:",
-            "safe, fast, productive.",
-            "Pick three.",
-            "Trust me.",
+            "Rust:\n",
+            "safe, fast, productive.\n",
+            "Pick three.\n",
+            "Trust me.\n",
         );
 
         assert_eq!(
-            vec!["Rust:", "Trust me."],
-            search_cased(query, contents, false)
+            vec!["Rust:", "Trust me.",],
+            search(query, contents, false)
         );
     }
 }
