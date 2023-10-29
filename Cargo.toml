@@ -17,4 +17,5 @@ members = [
   "ch09-errors",
   "ch10-generics",
   "ch11-testing",
+  "ch12-cli-tool-project",
 ]
