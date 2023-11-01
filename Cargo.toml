@@ -20,4 +20,5 @@ members = [
   "ch12-cli-tool-project",
   "ch13-fp",
   "ch15-smart-pointers",
+  "ch16-concurrency",
 ]
