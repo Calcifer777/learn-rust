@@ -106,6 +106,14 @@ name = "ch11-testing"
 version = "0.1.0"
 
 [[package]]
+name = "ch13-fp"
+version = "0.1.0"
+
+[[package]]
+name = "ch15-smart-pointers"
+version = "0.1.0"
+
+[[package]]
 name = "clap"
 version = "4.4.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"

@@ -18,4 +18,6 @@ members = [
   "ch10-generics",
   "ch11-testing",
   "ch12-cli-tool-project",
+  "ch13-fp",
+  "ch15-smart-pointers",
 ]
