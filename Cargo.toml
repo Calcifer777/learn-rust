@@ -21,4 +21,5 @@ members = [
   "ch13-fp",
   "ch15-smart-pointers",
   "ch16-concurrency",
+  "ch20-webserver",
 ]
