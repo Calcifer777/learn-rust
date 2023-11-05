@@ -1,49 +1,21 @@
-use std::fmt::format;
+mod tmpl;
+mod workers;
+
 use std::io::{BufRead, BufReader, Write};
 use std::net::{TcpListener, TcpStream};
 use std::thread;
 use std::time::Duration;
 
-const RESPONSE_TMPL: &'static str = "
-HTTP/1.1 200 OK\r\n
-Content-Type: text/html; charset=UTF-8\r\n
-\r\n
-";
-
-const HTML: &'static str = "
-<!DOCTYPE html>
-<html lang=\"en\">
-  <head>
-    <meta charset=\"utf-8\">
-    <title>Hello!</title>
-  </head>
-  <body>
-    <h1>Hello!</h1>
-    <p>Hi from Rust</p>
-  </body>
-</html>
-";
-
-const HTML_404: &'static str = "
-<!DOCTYPE html>
-<html lang=\"en\">
-  <head>
-    <meta charset=\"utf-8\">
-    <title>Hello!</title>
-  </head>
-  <body>
-    <h1>Oops!</h1>
-    <p>Sorry, I don't know what you're asking for.</p>
-  </body>
-</html>
-";
+use tmpl::*;
+use workers::*;
 
 pub fn listen(address: &str, port: i32) {
     let listener = TcpListener::bind(format!("{}:{}", address, port)).unwrap();
+    let pool = ThreadPool::new(4);
     for stream in listener.incoming() {
         let stream = stream.unwrap();
         println!("Connection established!");
-        handle_connection(stream);
+        pool.execute(|| handle_connection(stream));
     }
 }
 
@@ -67,10 +39,10 @@ fn handle_connection(mut stream: TcpStream) {
         "{status_line}\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n{html}", 
         html=content
     );
-    println!("{}", rsp);
+    // println!("{}", rsp);
     stream.write_all(rsp.as_bytes()).unwrap();
     stream.flush().unwrap();
-    println!("Response: {}", rsp);
+    // println!("Response: {}", rsp);
 }
 
 #[cfg(test)]
