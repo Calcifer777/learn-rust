@@ -1,15 +1,14 @@
-version: '3.8'
+version: '3'
 
 services:
-  postgres:
-    image: postgres:latest
-    container_name: my_postgres_db
+  database:
+    image: 'postgres:15-bullseye'
+    ports:
+      - 5432:5432
     environment:
-      POSTGRES_DB: mydatabase
+      POSTGRES_DB: postgres
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
