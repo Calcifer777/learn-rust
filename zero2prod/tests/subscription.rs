@@ -1,5 +1,5 @@
 use actix_web::{test, App};
-use sqlx::{PgConnection, Connection, PgPool};
+use sqlx::PgPool;
 use zero2prod::{routes::subscription::subscribe, configuration::get_configuration};
 
 
@@ -26,5 +26,7 @@ async fn test_subscribe_ok() {
     let sub = sqlx::query!("SELECT * FROM subscriptions")
         .fetch_one(&pool)
         .await
-        .expect("Failed to fetch saved subscription");
+        .expect("Failed to fetch saved subscription")
+        ;
+    
 }

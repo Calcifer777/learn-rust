@@ -1,5 +1,3 @@
-use std::path::Path;
-
 
 #[derive(serde::Deserialize)]
 pub struct Settings {

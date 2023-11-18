@@ -1,5 +1,6 @@
 use std::net::TcpListener;
 
+use sqlx::PgPool;
 use zero2prod::{startup::run, configuration::get_configuration};
 
 
@@ -9,6 +10,9 @@ async fn main() -> std::io::Result<()> {
     let cfg = get_configuration("./configuration.yaml")
         .expect("Failed to read configuration.");
     let listener = TcpListener::bind(format!("127.0.0.1:{}", cfg.port))?;
-    let server = run(listener);
+    let conn = PgPool::connect(
+        &cfg.database.connection_string()
+    ).await.expect("DB connection failed");
+    let server = run(listener, conn);
     server.await
 }
