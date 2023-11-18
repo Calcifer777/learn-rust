@@ -1,6 +1,6 @@
 use actix_web::{test, App};
 
-use zero2prod::health_check;
+use zero2prod::routes::health_check::health_check;
 
 
 #[actix_web::test]
