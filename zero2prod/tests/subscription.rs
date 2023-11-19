@@ -1,4 +1,5 @@
 use actix_web::{test, App, web};
+use secrecy::ExposeSecret;
 use sqlx::PgPool;
 use uuid::Uuid;
 use zero2prod::{routes::subscription::subscribe, configuration::get_configuration};
@@ -9,7 +10,7 @@ async fn init_db() -> web::Data<PgPool> {
         .unwrap();
     // Create temp db
     let db_pool = PgPool::connect(
-        &cfg.database.connection_string()
+        &cfg.db.connection_string().expose_secret()
     )
         .await
         .unwrap();
@@ -21,9 +22,9 @@ async fn init_db() -> web::Data<PgPool> {
         .await
         .expect("Failed to create database.");
     // Setup tmp db
-    cfg.database.name = temp_db;
+    cfg.db.name = temp_db;
     let db_pool = PgPool::connect(
-        &cfg.database.connection_string()
+        &cfg.db.connection_string().expose_secret()
         )
         .await
         .unwrap();
